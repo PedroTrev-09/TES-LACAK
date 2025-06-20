@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Link Pelacak</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif; background-color: #f0f2f5; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .card { background-color: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
+        h1 { color: #1c1e21; text-align: center; }
+        label { font-weight: 600; color: #606770; display: block; margin-bottom: 8px; }
+        input[type="text"] { width: 100%; padding: 12px; border: 1px solid #dddfe2; border-radius: 6px; font-size: 16px; box-sizing: border-box; }
+        button { background-color: #1877f2; color: white; border: none; padding: 12px 20px; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px; transition: background-color 0.2s; }
+        button:hover { background-color: #166fe5; }
+        #result { margin-top: 25px; display: none; }
+        #generated-link { background-color: #e7f3ff; border: 1px solid #1877f2; padding: 12px; border-radius: 6px; font-family: 'Courier New', Courier, monospace; word-wrap: break-word; }
+        small { color: #606770; text-align: center; display: block; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Generator Link Pelacak</h1>
+        <label for="tracking-id">Masukkan ID Unik (contoh: Target_A, ProyekX):</label>
+        <input type="text" id="tracking-id" placeholder="ID Pelacakan...">
+        <button onclick="generateLink()">Buat Link</button>
+        <div id="result">
+            <p><strong>Link berhasil dibuat:</strong></p>
+            <div id="generated-link"></div>
+            <button onclick="copyLink()" style="margin-top: 10px; background-color: #42b72a;">Salin Link</button>
+        </div>
+        <small>Ini adalah alat untuk Anda. Jangan bagikan link ke halaman ini.</small>
+    </div>
+
+<script>
+    function generateLink() {
+        const trackingId = document.getElementById('tracking-id').value;
+        if (!trackingId) {
+            alert('Harap masukkan ID Pelacakan!');
+            return;
+        }
+
+        const baseUrl = window.location.href.replace('generator.html', 'index.html');
+        const finalUrl = `${baseUrl}?id=${encodeURIComponent(trackingId)}`;
+
+        const resultDiv = document.getElementById('result');
+        const linkHolder = document.getElementById('generated-link');
+        
+        linkHolder.textContent = finalUrl;
+        resultDiv.style.display = 'block';
+    }
+
+    function copyLink() {
+        const linkText = document.getElementById('generated-link').textContent;
+        navigator.clipboard.writeText(linkText).then(() => {
+            alert('Link berhasil disalin ke clipboard!');
+        }, (err) => {
+            alert('Gagal menyalin link. Mohon salin secara manual.');
+        });
+    }
+</script>
+</body>
+</html>
